@@ -24,6 +24,7 @@ import logo from "@/assets/logo.png"
 import { reactive,ref } from 'vue'
 import type { FormRules, FormInstance } from "element-plus"
 import { useUserStore } from "@/store/auth"
+import { useRouter } from "vue-router"
 //定义表单接口
 interface RuleForm{
     username: string,
@@ -45,12 +46,14 @@ const rules = reactive<FormRules<RuleForm>>({
     
 })
 const formRef = ref<FormInstance>()
-const userStore=useUserStore()
+const userStore = useUserStore()
+const router=useRouter()
 const handleLogin = () => {
-    formRef.value?.validate((valid:boolean) => { //?. 可选链操作符
+    formRef.value?.validate(async(valid:boolean) => { //?. 可选链操作符
         if (valid) {
             //校验通过
-            userStore.login(ruleForm)
+            await userStore.login(ruleForm)
+            router.push("/")
         }
     })
 }

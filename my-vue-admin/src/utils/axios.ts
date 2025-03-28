@@ -17,7 +17,14 @@ service.interceptors.request.use((config:InternalAxiosRequestConfig) => {
     return Promise.reject(error)
 })
 //响应拦截器
-service.interceptors.response.use((response:AxiosResponse) => {
+service.interceptors.response.use((response: AxiosResponse) => {
+    if (response.data.code !== 200) {
+        ElNotification({
+            title: "Error",
+            message: response.data.message,
+            type:'error'
+        })
+    }
     return response.data
 }, (error:AxiosError) => {
     ElNotification({

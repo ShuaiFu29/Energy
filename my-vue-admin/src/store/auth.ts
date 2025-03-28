@@ -23,7 +23,8 @@ export const useUserStore = defineStore('user', {
                 sessionStorage.setItem("token", token)
                 sessionStorage.setItem("roles", JSON.stringify(roles))
                 sessionStorage.setItem("username", username)
-                sessionStorage.setItem("menu",JSON.stringify(roles))
+                sessionStorage.setItem("menu", JSON.stringify(menulist))
+
             } catch (error){
                 console.log("error",error)
             }
