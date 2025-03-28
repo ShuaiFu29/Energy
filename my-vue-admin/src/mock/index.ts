@@ -180,7 +180,7 @@ Mock.mock("https//www.demo.com/login", "post", (options:any) => {
             data: {
                 token: "successLoginUser",
                 user: {
-                    username: "运用员",
+                    username: "专运员",
                     roles:["user"]
                 },
                 menulist2

@@ -22,7 +22,8 @@
 <script setup lang="ts">
 import logo from "@/assets/logo.png"
 import { reactive,ref } from 'vue'
-import type { FormRules,FormInstance } from "element-plus"
+import type { FormRules, FormInstance } from "element-plus"
+import { useUserStore } from "@/store/auth"
 //定义表单接口
 interface RuleForm{
     username: string,
@@ -43,11 +44,13 @@ const rules = reactive<FormRules<RuleForm>>({
     ]
     
 })
-const formRef=ref<FormInstance>()
+const formRef = ref<FormInstance>()
+const userStore=useUserStore()
 const handleLogin = () => {
     formRef.value?.validate((valid:boolean) => { //?. 可选链操作符
         if (valid) {
             //校验通过
+            userStore.login(ruleForm)
         }
     })
 }
