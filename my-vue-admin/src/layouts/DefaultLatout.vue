@@ -4,15 +4,22 @@
             <Menu></Menu>
         </el-aside>
         <el-container>
-            <el-header>Header</el-header>
+            <el-header>
+                <TopHeader />
+            </el-header>
             <el-main>
-                <RouterView />
+                <TabsLayout />
+                <!-- <RouterView /> -->
             </el-main>
         </el-container>
     </el-container>
 </template>
 <script setup lang="ts">
+
 import Menu from '@/components/navMenu/Menu.vue';
+import TopHeader from '@/components/TopHeader/TopHeader.vue';
+import TabsLayout from './TabsLayout.vue';
+
 </script>
 <style lang="less" scoped>
 .el-aside {
