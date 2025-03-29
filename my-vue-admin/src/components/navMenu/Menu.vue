@@ -1,25 +1,27 @@
 <template>
     <div class="logo">
-        <img :src="logo" width="34px">
+        <img :src="logo" width="34px" height="34px" />
         <h1>动力港</h1>
     </div>
     <el-menu :router="true" :default-active="$route.path">
-        <menu-item v-for="item in menuitems" :item="item" :key="item.url"></menu-item>
+        <menu-item v-for="item in menuItems" :key="item.url" :item="item"></menu-item>
     </el-menu>
 </template>
 <script setup lang="ts">
 import { useUserStore } from '@/store/auth';
-import MenuItem from './MenuItem.vue';
 import logo from "@/assets/logo.png"
-const userStore = useUserStore()
-const menuitems = userStore.menu
+import MenuItem from './MenuItem.vue';
+
+const userStore = useUserStore();
+const menuItems = userStore.menu
+
 </script>
 <style scoped lang="less">
 .logo {
     display: flex;
     justify-content: center;
-    align-items: center;
     height: 50px;
+    align-items: center;
     padding: 10px 0;
 
     img {
@@ -29,8 +31,9 @@ const menuitems = userStore.menu
     h1 {
         color: #333;
         margin-left: 10px;
-        font-size: 22px;
+        font-size: 22px
     }
+
 }
 
 .el-menu {

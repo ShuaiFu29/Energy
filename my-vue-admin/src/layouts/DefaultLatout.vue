@@ -9,19 +9,21 @@
         </el-container>
     </el-container>
 </template>
-<script setup>
+<script setup lang="ts">
 import Menu from '@/components/navMenu/Menu.vue';
 </script>
 <style lang="less" scoped>
-.el-aside{
+.el-aside {
     height: 100vh;
     background-color: white;
-    box-shadow: 10px 0 8px -2px rgba(0,0,0,0.2);
+    box-shadow: 10px 0 8px -2px rgba(0, 0, 0, 0.2);
 }
-.el-header{
+
+.el-header {
     padding: 0 !important;
 }
-.el-main{
+
+.el-main {
     height: 80vh;
     overflow: auto;
 }

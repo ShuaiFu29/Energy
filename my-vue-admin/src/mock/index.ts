@@ -183,7 +183,7 @@ Mock.mock("https//www.demo.com/login", "post", (options:any) => {
                     username: "专运员",
                     roles:["user"]
                 },
-                menulist2
+                menulist:menulist2
             }
         }
     } else {
