@@ -8,7 +8,7 @@
         </template>
         <my-menu v-for="child in item.children" :key="child.url" :item="child"></my-menu>
     </el-sub-menu>
-    <el-menu-item v-else :index="item.url">
+    <el-menu-item v-else :index="item.url" v-show="!(item.name === '订单详情')">
         <el-icon>
             <component :is="item.icon"></component>
         </el-icon>
@@ -30,9 +30,10 @@ export default defineComponent({
 
 })
 </script>
-<style lang="less" scoped>
+<style scoped lang="less">
 .is-active {
-    background-color: rgb(34, 136, 255) !important;
+    background-color: rgb(34, 136, 255);
+    color: #fff !important;
 
     div {
         span {
@@ -46,7 +47,7 @@ export default defineComponent({
     color: #fff !important;
 }
 
-::v-deep .el-sub-menu_title:hover {
+::v-deep .el-sub-menu__title:hover {
     background-color: rgb(34, 136, 255) !important;
     color: #fff !important;
 }

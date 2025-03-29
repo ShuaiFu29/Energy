@@ -20,8 +20,8 @@ const menuItems = userStore.menu
 .logo {
     display: flex;
     justify-content: center;
-    height: 50px;
     align-items: center;
+    height: 50px;
     padding: 10px 0;
 
     img {
@@ -31,9 +31,8 @@ const menuItems = userStore.menu
     h1 {
         color: #333;
         margin-left: 10px;
-        font-size: 22px
+        font-size: 22px;
     }
-
 }
 
 .el-menu {
