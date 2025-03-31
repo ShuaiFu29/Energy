@@ -158,7 +158,16 @@
                 </el-row>
             </el-card>
         </el-col>
-        <el-col :span="6"></el-col>
+        <el-col :span="6">
+            <el-card>
+                <template #header>
+                    <div class="card-header">
+                        <h1>设备总览</h1>
+                    </div>
+                </template>
+                <div ref="chartRef3" style="width: 100%;height: 240px;"></div>
+            </el-card>
+        </el-col>
     </el-row>
 </template>
 <script setup lang="ts">
@@ -173,9 +182,10 @@ import money from "@/assets/money.png"
 import daily from "@/assets/daily.png"
 import { ref, reactive } from "vue"
 import { useChart } from '@/hooks/useChart'
-import { chartDataApi } from "@/api/dashboard"
+import { chartDataApi, chartDataApi2, chartDataApi3 } from "@/api/dashboard"
 const chartRef = ref(null)
-
+const chartRef2 = ref(null)
+const chartRef3 = ref(null)
 const setChartData = async () => {
     const chartOptions: any = reactive({
         title: {
@@ -252,8 +262,89 @@ const setChartData = async () => {
     }
     return chartOptions
 }
+const setChartData2 = async () => {
+    const chartOptions = reactive({
+        legend: {
+            top: 'bottom',
 
+        },
+
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} %'
+        },
+        series: [
+            {
+                name: '营收占比',
+                type: 'pie',
+                radius: ['50%', '70%'], // 内外半径形成环形
+                center: ['50%', '50%'],
+                roseType: 'area',
+                color: ['#4B6EBD', '#3DBB92', '#53C1D6'], // 颜色
+                label: {
+                    show: false
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: '16',
+                        fontWeight: 'bold'
+                    }
+                },
+                data: []
+            }
+        ],
+        graphic: {
+            type: 'text',
+            left: 'center',
+            top: 'center',
+            style: {
+                text: '营收占比',
+                textAlign: 'center',
+                textVerticalAlign: 'middle',
+                fontSize: 20,
+                fill: '#333'
+            }
+        }
+    });
+    const res = await chartDataApi2();
+    chartOptions.series[0].data = res.data.list
+    return chartOptions
+}
+const setChartData3 = async () => {
+    const chartOptions = reactive({
+        radar: {
+            // shape: 'circle',
+            indicator: [
+                { name: '闲置数', max: 65 },
+                { name: '使用数', max: 160 },
+                { name: '故障数', max: 300 },
+                { name: '维修数', max: 380 },
+                { name: '更换数', max: 520 },
+                { name: '报废数', max: 250 }
+            ]
+        },
+        series: [
+            {
+                name: '设备总览',
+                type: 'radar',
+                data: [
+                    {
+                        value: [],
+                        name: '设备总览'
+                    },
+
+                ]
+            }
+        ]
+    });
+    const res = await chartDataApi3();
+    chartOptions.series[0].data[0].value = res.data.list
+    return chartOptions
+}
 useChart(chartRef, setChartData)
+useChart(chartRef2, setChartData2)
+useChart(chartRef3, setChartData3)
 </script>
 <style lang="less" scoped>
 .title {

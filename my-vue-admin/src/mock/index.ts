@@ -207,3 +207,27 @@ Mock.mock("https//www.demo.com/chartData","get",()=>{
     }
   }
 })
+////echarts图表数据接口2 饼图
+Mock.mock("https//www.demo.com/chartData2",'get',()=>{
+  return {
+    code: 200,
+    message: '操作成功',
+    data: {
+      list:[
+        { value: 35, name: '充电桩' },  // 数据值和名称
+        { value: 30, name: '充电站' },
+        { value: 25, name: '充电杆' }
+      ]
+    }
+  };
+})
+//echarts图表数据接口3 雷达图
+Mock.mock("https//www.demo.com/chartData3",'get',()=>{
+  return {
+    code: 200,
+    message: '操作成功',
+    data: {
+      list: [42, 30, 200, 350, 500, 180]
+    }
+  };
+})
