@@ -167,6 +167,118 @@
                 </template>
                 <div ref="chartRef3" style="width: 100%;height: 240px;"></div>
             </el-card>
+            <el-card class="mt">
+                <template #header>
+                    <div class="card-header">
+                        <h1>营收统计表</h1>
+                    </div>
+                </template>
+                <ul class="ranking-list">
+                    <li class="ranking-item">
+                        <span class="rank" style="background-color:rgb(103, 194, 58);color: #fff ;">1</span>
+                        <span class="store-name">广州</span>
+
+                        <span class="sales">52,457</span>
+                        <span style="margin-left: 12px;">
+                            24%
+                            <el-icon color="green">
+                                <CaretTop />
+                            </el-icon>
+                        </span>
+                    </li>
+                    <li class="ranking-item">
+                        <span class="rank" style="background-color:rgb(64, 158, 255) ;color: #fff ;">2</span>
+                        <span class="store-name">上海</span>
+                        <span class="sales">323,234</span>
+                        <span style="margin-left: 12px;">
+                            24%
+                            <el-icon color="red">
+                                <CaretBottom />
+                            </el-icon>
+                        </span>
+                    </li>
+                    <li class="ranking-item">
+                        <span class="rank" style="background-color:rgb(230, 162, 60) ;color: #fff ;">3</span>
+                        <span class="store-name">佛山</span>
+                        <span class="sales">192,255</span>
+                        <span style="margin-left: 12px;">
+                            24%
+                            <el-icon color="red">
+                                <CaretBottom />
+                            </el-icon>
+                        </span>
+                    </li>
+                    <li class="ranking-item">
+                        <span class="rank">4</span>
+                        <span class="store-name">珠海</span>
+                        <span class="sales">17,540</span>
+                        <span style="margin-left: 12px;">
+                            24%
+                            <el-icon color="green">
+                                <CaretTop />
+                            </el-icon>
+                        </span>
+                    </li>
+                    <li class="ranking-item">
+                        <span class="rank">5</span>
+                        <span class="store-name">深圳</span>
+                        <span class="sales">662,337</span>
+                        <span style="margin-left: 12px;">
+                            24%
+                            <el-icon color="red">
+                                <CaretBottom />
+                            </el-icon>
+                        </span>
+                    </li>
+                    <li class="ranking-item">
+                        <span class="rank">6</span>
+                        <span class="store-name">厦门</span>
+                        <span class="sales">22,941</span>
+                        <span style="margin-left: 12px;">
+                            24%
+                            <el-icon color="green">
+                                <CaretTop />
+                            </el-icon>
+                        </span>
+                    </li>
+                    <li class="ranking-item">
+                        <span class="rank">7</span>
+                        <span class="store-name">长沙</span>
+                        <span class="sales">565,221</span>
+                        <span style="margin-left: 12px;">
+                            24%
+                            <el-icon color="green">
+                                <CaretTop />
+                            </el-icon>
+                        </span>
+                    </li>
+                </ul>
+            </el-card>
+            <el-card class="mt">
+                <template #header>
+                    <div class="card-header">
+                        <h1>故障报警</h1>
+                    </div>
+                </template>
+                <el-timeline style="max-width: 600px">
+                    <el-timeline-item timestamp="2018/4/12" placement="top" :hollow="true" type="danger">
+                        <el-card>
+                            <h4>矿业北路通讯中断</h4>
+                        </el-card>
+                    </el-timeline-item>
+                    <el-timeline-item timestamp="2018/4/3" placement="top" :hollow="true" type="warning">
+                        <el-card>
+                            <h4>黄河南路超出服务区域</h4>
+                        </el-card>
+                    </el-timeline-item>
+                    <el-timeline-item timestamp="2018/4/2" placement="top" :hollow="true" type="danger">
+                        <el-card>
+                            <h4>6号机组异常断电</h4>
+
+                        </el-card>
+                    </el-timeline-item>
+                </el-timeline>
+            </el-card>
         </el-col>
     </el-row>
 </template>
@@ -388,5 +500,46 @@ useChart(chartRef3, setChartData3)
         margin-top: 10px;
         color: #333;
     }
+}
+
+.ranking-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.ranking-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.ranking-item:nth-child(even) {
+    background-color: rgb(253, 246, 236);
+    /* 交替背景色 */
+}
+
+
+.rank {
+    font-weight: bold;
+    color: #666;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    /* 排名颜色 */
+}
+
+.store-name {
+    flex-grow: 1;
+    padding: 0 10px;
+}
+
+.sales {
+    color: #666;
+    /* 销售额颜色 */
 }
 </style>
