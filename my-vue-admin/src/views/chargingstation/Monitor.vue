@@ -73,8 +73,8 @@
             <el-table-column prop="tel" label="负责人电话"></el-table-column>
             <el-table-column label="操作">
                 <template #default="scope">
-                    <el-button type="primary" size="small">编辑</el-button>
-                    <el-button type="danger" size="small">删除</el-button>
+                    <el-button type="primary" size="small" @click="edit(scope.row)">编辑</el-button>
+                    <el-button type="danger" size="small" @click="">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -83,7 +83,7 @@
             :total="totals" @size-change="handleSizeChange" @current-change="handleCurrentChange">
         </el-pagination>
     </el-card>
-    <StationForm />
+    <StationForm :dialog-visible="visible" @close='visible = false' />
 </template>
 
 <script setup lang="ts">
@@ -91,6 +91,7 @@ import { ref, reactive, onMounted } from 'vue'
 import { listApi } from '@/api/chargingstations'
 import StationForm from './components/StationForm.vue'
 import type { RowType } from '@/types/station'
+import { useStationStore } from '@/store/station'
 const formParams = reactive({
     input: "",
     value: 1
@@ -129,4 +130,12 @@ const handleReset = () => {
     select.value = 'name'
     loadData()
 }
+const visible = ref<boolean>(false)
+const stationStore = useStationStore()
+const { setRowData } = stationStore
+const edit = (row: RowType) => {
+    setRowData(row)
+    visible.value = true
+}
+
 </script>

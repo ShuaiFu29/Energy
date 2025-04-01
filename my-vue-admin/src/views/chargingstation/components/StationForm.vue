@@ -1,6 +1,6 @@
 <template>
-    <el-dialog title="编辑站点信息" :model-value="true">
-        <el-form :model="ruleForm" label-width="120" :rules="rules" >
+    <el-dialog title="新增充电站" :model-value="dialogVisible" @close="handleCancel">
+        <el-form :model="ruleForm" label-width="120" :rules="rules">
             <el-row>
                 <el-col :span="12">
                     <el-form-item label="站点名称：" prop="name">
@@ -27,7 +27,7 @@
                         <el-input v-model="ruleForm.slow" />
                     </el-form-item>
                     <el-form-item label="充电站状态：" prop="status">
-                        <el-select v-model="ruleForm.status" placeholder="充电站状态" :disabled="disabled">
+                        <el-select v-model="ruleForm.status" placeholder="充电站状态">
                             <el-option :value="1" label="全部"></el-option>
                             <el-option :value="2" label="使用中"></el-option>
                             <el-option :value="3" label="空闲中"></el-option>
@@ -36,19 +36,18 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="正在充电：" prop="now">
-                        <el-input v-model="ruleForm.now" :disabled="disabled" />
+                        <el-input v-model="ruleForm.now" />
                     </el-form-item>
                     <el-form-item label="故障数：" prop="fault">
-                        <el-input v-model="ruleForm.fault" :disabled="disabled" />
+                        <el-input v-model="ruleForm.fault" />
                     </el-form-item>
                 </el-col>
             </el-row>
         </el-form>
-
         <template #footer>
             <div class="dialog-footer">
-                <el-button>取消</el-button>
-                <el-button type="primary" >
+                <el-button @click="handleCancel">取消</el-button>
+                <el-button type="primary">
                     确认
                 </el-button>
             </div>
@@ -57,21 +56,29 @@
 </template>
 
 <script setup lang="ts">
-import {ref,reactive} from 'vue'
-import type{FormRules} from 'element-plus'
-import type{RowType} from '@/types/station' 
-const dialogVisible=ref<boolean>(true)
-const ruleForm=ref<RowType>({
-    name:'',
-    id:'',
-    city:'',
-    fast:'',
-    slow:'',
-    status:1,
-    now:'',
-    fault:'',
-    person:'',
-    tel:''
+import { ref, reactive, watch } from 'vue'
+import type { FormRules } from 'element-plus'
+import type { RowType } from '@/types/station'
+import { useStationStore } from '@/store/station';
+import { storeToRefs } from 'pinia';
+const props = defineProps({
+    dialogVisible: {
+        type: Boolean,
+        required: true
+    }
+})
+const emit = defineEmits(['close'])
+const ruleForm = ref<RowType>({
+    name: '',
+    id: '',
+    city: '',
+    fast: '',
+    slow: '',
+    status: 1,
+    now: '',
+    fault: '',
+    person: '',
+    tel: ''
 })
 const rules = reactive<FormRules<RowType>>({
     name: [
@@ -105,4 +112,14 @@ const rules = reactive<FormRules<RowType>>({
         { required: true, message: '故障数量不能为空', trigger: 'blur' },
     ]
 })
+const stationStore = useStationStore()
+const { rowData } = storeToRefs(stationStore)
+watch(() => props.dialogVisible, () => {
+    ruleForm.value = rowData.value
+    disabled.value = true
+})
+const disabled = ref<boolean>(false)
+const handleCancel = () => {
+    emit('close')
+}
 </script>
