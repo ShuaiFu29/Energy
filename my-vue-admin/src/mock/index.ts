@@ -648,3 +648,13 @@ Mock.mock("https//www.demo.com/stationList", 'post', (options: any) => {
     },
   };
 });
+//新增/编辑充电站
+Mock.mock("https//www.demo.com/station/edit", 'post', (options: any) => {
+  const res: any = JSON.parse(options.body);
+  console.log("新增/编辑充电站接口收到数据：",res)
+  return {
+    code: 200,
+    success: true,
+    data: "操作成功",
+  };
+});

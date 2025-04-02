@@ -45,10 +45,7 @@
     </el-card>
     <el-card class="mt">
         <el-button type="primary">
-            <el-icon style="margin-right: 5px;">
-                <Plus />
-            </el-icon>
-            新增充电站
+            <el-button type="primary" icon="Plus" @click="handleAdd">新增充电站</el-button>
         </el-button>
     </el-card>
     <el-card class="mt">
@@ -83,7 +80,7 @@
             :total="totals" @size-change="handleSizeChange" @current-change="handleCurrentChange">
         </el-pagination>
     </el-card>
-    <StationForm :dialog-visible="visible" @close='visible = false' />
+    <StationForm :dialog-visible="visible" @close='visible = false' @reload="loadData" />
 </template>
 
 <script setup lang="ts">
@@ -137,5 +134,19 @@ const edit = (row: RowType) => {
     setRowData(row)
     visible.value = true
 }
-
+const handleAdd = () => {
+    setRowData({
+        name: '',
+        id: '',
+        city: '',
+        fast: '',
+        slow: '',
+        status: 1,
+        now: '',
+        fault: '',
+        person: '',
+        tel: ''
+    })
+    visible.value = true
+}
 </script>

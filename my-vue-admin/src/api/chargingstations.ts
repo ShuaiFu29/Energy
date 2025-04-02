@@ -1,4 +1,5 @@
 import { post } from '@/utils/http'
+import { RowType } from '@/types/station'
 interface ListType{
     page: number,
     pageSize: number,
@@ -7,9 +8,13 @@ interface ListType{
     status:number
 }
 enum Api{
-    List='/stationList'
+    List = '/stationList',
+    Edit='/station/edit'
 }
 function listApi(data:ListType) {
     return post(Api.List,data)
 }
-export { listApi }
+function editApi(data: RowType) {
+    return post(Api.Edit,data)
+}
+export { listApi,editApi }

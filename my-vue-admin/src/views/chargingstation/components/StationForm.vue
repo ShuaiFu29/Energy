@@ -1,6 +1,6 @@
 <template>
-    <el-dialog title="新增充电站" :model-value="dialogVisible" @close="handleCancel">
-        <el-form :model="ruleForm" label-width="120" :rules="rules">
+    <el-dialog :title='title' :model-value="dialogVisible" @close="handleCancel" destroy-on-close>
+        <el-form :model="ruleForm" label-width="120" :rules="rules" ref="formRef">
             <el-row>
                 <el-col :span="12">
                     <el-form-item label="站点名称：" prop="name">
@@ -27,7 +27,7 @@
                         <el-input v-model="ruleForm.slow" />
                     </el-form-item>
                     <el-form-item label="充电站状态：" prop="status">
-                        <el-select v-model="ruleForm.status" placeholder="充电站状态">
+                        <el-select v-model="ruleForm.status" placeholder="充电站状态" :disabled="disabled">
                             <el-option :value="1" label="全部"></el-option>
                             <el-option :value="2" label="使用中"></el-option>
                             <el-option :value="3" label="空闲中"></el-option>
@@ -36,10 +36,10 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="正在充电：" prop="now">
-                        <el-input v-model="ruleForm.now" />
+                        <el-input v-model="ruleForm.now" :disabled="disabled" />
                     </el-form-item>
                     <el-form-item label="故障数：" prop="fault">
-                        <el-input v-model="ruleForm.fault" />
+                        <el-input v-model="ruleForm.fault" :disabled="disabled" />
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -47,7 +47,7 @@
         <template #footer>
             <div class="dialog-footer">
                 <el-button @click="handleCancel">取消</el-button>
-                <el-button type="primary">
+                <el-button type="primary" @click="handleConfirm">
                     确认
                 </el-button>
             </div>
@@ -57,17 +57,20 @@
 
 <script setup lang="ts">
 import { ref, reactive, watch } from 'vue'
-import type { FormRules } from 'element-plus'
+import type { FormRules, FormInstance } from 'element-plus'
 import type { RowType } from '@/types/station'
-import { useStationStore } from '@/store/station';
+import { useStationStore } from '@/store/station'
 import { storeToRefs } from 'pinia';
+import { editApi } from '@/api/chargingstations'
+import { ElMessage } from 'element-plus'
 const props = defineProps({
     dialogVisible: {
         type: Boolean,
         required: true
     }
 })
-const emit = defineEmits(['close'])
+const title = ref<string>('')
+const emit = defineEmits(['close', 'reload'])
 const ruleForm = ref<RowType>({
     name: '',
     id: '',
@@ -115,11 +118,33 @@ const rules = reactive<FormRules<RowType>>({
 const stationStore = useStationStore()
 const { rowData } = storeToRefs(stationStore)
 watch(() => props.dialogVisible, () => {
+    if (rowData.value.name) {
+        title.value = '编辑充电站信息'
+        disabled.value = true
+    } else {
+        title.value = '新增充电站信息'
+        disabled.value = false
+    }
     ruleForm.value = rowData.value
-    disabled.value = true
 })
 const disabled = ref<boolean>(false)
 const handleCancel = () => {
     emit('close')
+}
+const formRef = ref<FormInstance>()
+const handleConfirm = () => {
+    formRef.value?.validate(async (valid: boolean) => {
+        if (valid) {
+            const res = await editApi(ruleForm.value)
+            if (res.code === 200) {
+                ElMessage({
+                    message: res.data,
+                    type: 'success'
+                })
+                handleCancel()
+                emit('reload')
+            }
+        }
+    })
 }
 </script>
