@@ -102,15 +102,22 @@
             <div ref="chartRef" style="width: 100%; height: 300px;"></div>
         </el-card>
         <el-card class="mt">
-            <el-table :table="tableData" v-loading="loading">
+            <el-table :data="tableData" v-loading="loading">
                 <el-table-column type="index" label="序号" width="80"></el-table-column>
                 <el-table-column label="充电站名称" prop="name"></el-table-column>
                 <el-table-column label="充电站ID" prop="id"></el-table-column>
-                <el-table-column label="充电站所属城市" prop="city"></el-table-column>
-                <el-table-column label="充电总量(个)" prop="count"></el-table-column>
-                <el-table-column label="单日总收入(元)"></el-table-column>
-                <el-table-column label="月度总收入(元)" prop="month"></el-table-column>
-                <el-table-column label="电费营收(元)" prop='electricity'></el-table-column>
+                <el-table-column label="所属城市" prop="city"></el-table-column>
+                <el-table-column label="充电桩总量(个)" prop="count"></el-table-column>
+                <el-table-column label="单日总收入(元)" prop="day"></el-table-column>
+                <el-table-column label="月度总收入(万元)" prop="month">
+                    <template #default="scope">
+                        <span>{{ scope.row.month }}</span>
+                        <el-tag :type="scope.row.mpercent > 0 ? 'danger' : 'success'" class="ml">
+                            {{ scope.row.mpercent > 0 ? "+" + scope.row.mpercent + "%" : scope.row.mpercent + "%" }}
+                        </el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column label="电费营收(元)" prop="electricity"></el-table-column>
                 <el-table-column label="停车费营收(元)" prop="parkingFee"></el-table-column>
                 <el-table-column label="服务费营收(元)" prop="serviceFee"></el-table-column>
                 <el-table-column label="会员储值金(元)" prop="member"></el-table-column>
@@ -123,6 +130,7 @@ import formatNumberToThousands from '@/utils/toThousands'
 import { chartApi, revenueApi } from '@/api/chargingstation';
 import { useChart } from '@/hooks/useChart';
 import { ref, reactive, onMounted } from 'vue';
+import { TableData } from '@/types/revenue';
 const chartRef = ref(null)
 const setChartDate = async () => {
     const chartOptions = reactive({
@@ -171,14 +179,14 @@ const setChartDate = async () => {
         ]
     });
     const res = await chartApi()
-    chartOptions.legend.data = res.data.list.map((item: any) => item.name)
+    chartOptions.legend.data = res.data.list.map((item: any) => item.name);
     for (let i = 0; i < res.data.list.length; i++) {
         chartOptions.series[i].name = res.data.list[i].name
         chartOptions.series[i].data = res.data.list[i].data
     }
     return chartOptions
 }
-const tableData = ref([])
+const tableData = ref<TableData>()
 const loading = ref<boolean>(false)
 useChart(chartRef, setChartDate)
 const loadData = async () => {
@@ -186,6 +194,10 @@ const loadData = async () => {
     const { data: { list, total } } = await revenueApi({ page: 1, pageSize: 10, name: '' })
     tableData.value = list
     loading.value = false
+    tableData.value = list.map((item: any) => ({
+        ...item,
+        day: item.electricity + item.parkingFee + item.serviceFee + item.member
+    }))
 }
 onMounted(() => {
     loadData()

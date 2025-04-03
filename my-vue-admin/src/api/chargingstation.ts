@@ -1,7 +1,5 @@
 import { post,get } from '@/utils/http'
 import { RowType } from '@/types/station'
-import Revenue from '@/views/chargingstation/Revenue.vue'
-import { number } from 'echarts/types/src/echarts.all.js'
 
 interface ListType{
     page: number,
@@ -35,6 +33,6 @@ function chartApi(){
     return get(Api.RevenueChart)
 }
 function revenueApi(data:RevenueType) {
-    return post(Api.Revenue)
+    return post(Api.Revenue,data)
 }
 export { listApi,editApi,deleteApi,chartApi,revenueApi }

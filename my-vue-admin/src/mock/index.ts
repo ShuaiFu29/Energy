@@ -687,27 +687,6 @@ Mock.mock("https//www.demo.com/revenueChart", "get", () => {
     }
   };
 })
-//营收统计图表
-Mock.mock("https//www.demo.com/revenueChart", "get", () => {
-  return {
-    code: 200,
-    success: true,
-    data: {
-      list:[
-        {
-          name:"销售",
-          data:[60, 40, 120, 140, 160, 80, 140]
-        },
-        {
-          name:"访问量",
-          data:[600, 400, 600, 700, 800, 400, 700]
-        },
-
-      ]
-    }
-  };
-})
-
 //营收统计接口
 let chargingStation2 = [
   {
