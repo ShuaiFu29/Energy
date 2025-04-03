@@ -71,7 +71,11 @@
             <el-table-column label="操作">
                 <template #default="scope">
                     <el-button type="primary" size="small" @click="edit(scope.row)">编辑</el-button>
-                    <el-button type="danger" size="small" @click="">删除</el-button>
+                    <el-popconfirm title="确定要删除当前站点吗？" @confirm="handleDelete(scope.row.id)">
+                        <template #reference>
+                            <el-button size="small" type="danger">删除</el-button>
+                        </template>
+                    </el-popconfirm>
                 </template>
             </el-table-column>
         </el-table>
@@ -85,10 +89,11 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
-import { listApi } from '@/api/chargingstations'
+import { listApi, deleteApi } from '@/api/chargingstation'
 import StationForm from './components/StationForm.vue'
 import type { RowType } from '@/types/station'
 import { useStationStore } from '@/store/station'
+import { ElMessage } from 'element-plus'
 const formParams = reactive({
     input: "",
     value: 1
@@ -148,5 +153,15 @@ const handleAdd = () => {
         tel: ''
     })
     visible.value = true
+}
+const handleDelete = async (id: string) => {
+    const res = await deleteApi(id)
+    if (res.code === 200) {
+        ElMessage({
+            message: res.data,
+            type: 'success'
+        })
+    }
+    loadData()
 }
 </script>

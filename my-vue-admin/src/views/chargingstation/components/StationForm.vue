@@ -61,7 +61,7 @@ import type { FormRules, FormInstance } from 'element-plus'
 import type { RowType } from '@/types/station'
 import { useStationStore } from '@/store/station'
 import { storeToRefs } from 'pinia';
-import { editApi } from '@/api/chargingstations'
+import { editApi } from '@/api/chargingstation'
 import { ElMessage } from 'element-plus'
 const props = defineProps({
     dialogVisible: {

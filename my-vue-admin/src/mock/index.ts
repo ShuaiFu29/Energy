@@ -658,3 +658,496 @@ Mock.mock("https//www.demo.com/station/edit", 'post', (options: any) => {
     data: "操作成功",
   };
 });
+//删除充电站接口
+Mock.mock("https//www.demo.com/station/delete", "post", (options: any) => {
+  console.log('删除充电站接口收到参数', JSON.parse(options.body))
+  return {
+    code: 200,
+    success: true,
+    data: "操作成功",
+  };
+})
+//营收统计图表
+Mock.mock("https//www.demo.com/revenueChart", "get", () => {
+  return {
+    code: 200,
+    success: true,
+    data: {
+      list:[
+        {
+          name:"销售",
+          data:[60, 40, 120, 140, 160, 80, 140]
+        },
+        {
+          name:"访问量",
+          data:[600, 400, 600, 700, 800, 400, 700]
+        },
+
+      ]
+    }
+  };
+})
+//营收统计图表
+Mock.mock("https//www.demo.com/revenueChart", "get", () => {
+  return {
+    code: 200,
+    success: true,
+    data: {
+      list:[
+        {
+          name:"销售",
+          data:[60, 40, 120, 140, 160, 80, 140]
+        },
+        {
+          name:"访问量",
+          data:[600, 400, 600, 700, 800, 400, 700]
+        },
+
+      ]
+    }
+  };
+})
+
+//营收统计接口
+let chargingStation2 = [
+  {
+    name: "北京西单充电站",
+    id: "VXZ10001",
+    city: "北京",
+    count: 135, // 充电桩总数量
+    electricity: 7563, // 电费
+    parkingFee: 2356, // 停车费
+    serviceFee: 5633, // 服务费
+    month: 2155, // 月度总收入
+    member: 2698, // 会员储值金
+    percent: -5.3, // 增长比例
+    mpercent: 2.3
+  },
+  {
+    name: "上海陆家嘴充电站",
+    id: "VXZ10002",
+    city: "上海",
+    count: 125, // fast + slow
+    electricity: 8000,
+    parkingFee: 3000,
+    serviceFee: 7000,
+    month: 5000,
+    member: 3500,
+    percent: 2.5,
+    mpercent: 2.4
+  },
+  {
+    name: "广州花城广场充电站",
+    id: "VXZ10003",
+    city: "广州",
+    count: 123,
+    electricity: 8200,
+    parkingFee: 3100,
+    serviceFee: 7100,
+    month: 5200,
+    member: 3600,
+    percent: 3.0,
+    mpercent: 3.5
+  },
+  {
+    name: "深圳大梅沙充电站",
+    id: "VXZ10004",
+    city: "深圳",
+    count: 110,
+    electricity: 7800,
+    parkingFee: 2900,
+    serviceFee: 6900,
+    month: 4900,
+    member: 3400,
+    percent: -1.8,
+    mpercent: -2.6
+  },
+  {
+    name: "成都天府广场充电站",
+    id: "VXZ10005",
+    city: "成都",
+    count: 125,
+    electricity: 8300,
+    parkingFee: 3200,
+    serviceFee: 7200,
+    month: 5300,
+    member: 3700,
+    percent: 3.5,
+    mpercent: -0.1
+  },
+  {
+    name: "西安钟楼充电站",
+    id: "VXZ10006",
+    city: "西安",
+    count: 115,
+    electricity: 7900,
+    parkingFee: 2950,
+    serviceFee: 7050,
+    month: 5100,
+    member: 3450,
+    percent: -2.2,
+    mpercent: -0.8
+  },
+  {
+    name: "杭州西湖充电站",
+    id: "VXZ10007",
+    city: "杭州",
+    count: 104,
+    electricity: 7600,
+    parkingFee: 2800,
+    serviceFee: 6800,
+    month: 4800,
+    member: 3300,
+    percent: 1.5,
+    mpercent: 0.7
+  },
+  {
+    name: "南京夫子庙充电站",
+    id: "VXZ10008",
+    city: "南京",
+    count: 129,
+    electricity: 8400,
+    parkingFee: 3250,
+    serviceFee: 7250,
+    month: 5400,
+    member: 3750,
+    percent: 4.0,
+    mpercent: 6.2
+  },
+  {
+    name: "天津意大利风情区充电站",
+    id: "VXZ10009",
+    city: "天津",
+    count: 123,
+    electricity: 8150,
+    parkingFee: 3100,
+    serviceFee: 7100,
+    month: 5150,
+    member: 3500,
+    percent: -2.8,
+    mpercent: -0.4
+  },
+  {
+    name: "青岛栈桥充电站",
+    id: "VXZ10010",
+    city: "青岛",
+    count: 123,
+    electricity: 8100,
+    parkingFee: 3050,
+    serviceFee: 7050,
+    month: 5100,
+    member: 3450,
+    percent: 2.7,
+    mpercent: 3.4
+  },
+  {
+    name: "武汉黄鹤楼充电站",
+    id: "VXZ10011",
+    city: "武汉",
+    count: 102,
+    electricity: 7400,
+    parkingFee: 2700,
+    serviceFee: 6700,
+    month: 4700,
+    member: 3250,
+    percent: 1.2,
+    mpercent: 0.6
+  },
+  {
+    name: "福州三坊七巷充电站",
+    id: "VXZ10012",
+    city: "福州",
+    count: 107,
+    electricity: 7650,
+    parkingFee: 2850,
+    serviceFee: 6850,
+    month: 4850,
+    member: 3350,
+    percent: 1.7,
+    mpercent: 1.3
+  },
+  {
+    name: "合肥包公园充电站",
+    id: "VXZ10013",
+    city: "合肥",
+    count: 100,
+    electricity: 7200,
+    parkingFee: 2600,
+    serviceFee: 6600,
+    month: 4600,
+    member: 3200,
+    percent: -0.9,
+    mpercent: 0.5
+  },
+  {
+    name: "重庆解放碑充电站",
+    id: "VXZ10014",
+    city: "重庆",
+    count: 117,
+    electricity: 7950,
+    parkingFee: 3000,
+    serviceFee: 7100,
+    month: 5150,
+    member: 3500,
+    percent: 2.6,
+    mpercent: 3.1
+  },
+  {
+    name: "桂林漓江充电站",
+    id: "VXZ10015",
+    city: "桂林",
+    count: 106,
+    electricity: 7700,
+    parkingFee: 2800,
+    serviceFee: 6900,
+    month: 4950,
+    member: 3400,
+    percent: 2.0,
+    mpercent: -1.5
+  },
+  {
+    name: "苏州园区充电站",
+    id: "VXZ10016",
+    city: "苏州",
+    count: 115,
+    electricity: 7900,
+    parkingFee: 2950,
+    serviceFee: 7050,
+    month: 5100,
+    member: 3450,
+    percent: 2.3,
+    mpercent: 0.9
+  },
+  {
+    name: "昆明滇池充电站",
+    id: "VXZ10017",
+    city: "昆明",
+    count: 112,
+    electricity: 7800,
+    parkingFee: 2900,
+    serviceFee: 7000,
+    month: 5050,
+    member: 3400,
+    percent: -2.1,
+    mpercent: 0.8
+  },
+  {
+    name: "南宁青秀山充电站",
+    id: "VXZ10018",
+    city: "南宁",
+    count: 117,
+    electricity: 7900,
+    parkingFee: 2950,
+    serviceFee: 7050,
+    month: 5100,
+    member: 3450,
+    percent: -2.4,
+    mpercent: -2.7
+  },
+  {
+    name: "长沙橘子洲头充电站",
+    id: "VXZ10019",
+    city: "长沙",
+    count: 112,
+    electricity: 7750,
+    parkingFee: 2850,
+    serviceFee: 6950,
+    month: 4950,
+    member: 3350,
+    percent: -1.9,
+    mpercent: -1.1
+  },
+  {
+    name: "哈尔滨中央大街充电站",
+    id: "VXZ10020",
+    city: "哈尔滨",
+    count: 107,
+    electricity: 7650,
+    parkingFee: 2800,
+    serviceFee: 6800,
+    month: 4850,
+    member: 3300,
+    percent: 1.6,
+    mpercent: -0.9
+  },
+  {
+    name: "石家庄正定古城充电站",
+    id: "VXZ10021",
+    city: "石家庄",
+    count: 103,
+    electricity: 7500,
+    parkingFee: 2750,
+    serviceFee: 6750,
+    month: 4750,
+    member: 3250,
+    percent: 1.3,
+    mpercent: 2.8
+  },
+  {
+    name: "兰州黄河桥充电站",
+    id: "VXZ10022",
+    city: "兰州",
+    count: 126,
+    electricity: 8200,
+    parkingFee: 3150,
+    serviceFee: 7150,
+    month: 5200,
+    member: 3550,
+    percent: 3.1,
+    mpercent: 4.4
+  },
+  {
+    name: "济南大明湖充电站",
+    id: "VXZ10023",
+    city: "济南",
+    count: 132,
+    electricity: 8400,
+    parkingFee: 3250,
+    serviceFee: 7250,
+    month: 5350,
+    member: 3650,
+    percent: -3.7,
+    mpercent: -5.5
+  },
+  {
+    name: "沈阳故宫充电站",
+    id: "VXZ10024",
+    city: "沈阳",
+    count: 108,
+    electricity: 7700,
+    parkingFee: 2850,
+    serviceFee: 6850,
+    month: 4900,
+    member: 3350,
+    percent: 1.8,
+    mpercent: -2.3
+  },
+  {
+    name: "福州西湖充电站",
+    id: "VXZ10025",
+    city: "福州",
+    count: 113,
+    electricity: 7850,
+    parkingFee: 2950,
+    serviceFee: 6950,
+    month: 5050,
+    member: 3400,
+    percent: 2.0,
+    mpercent: 2.2
+  },
+  {
+    name: "无锡灵山大佛充电站",
+    id: "VXZ10026",
+    city: "无锡",
+    count: 123,
+    electricity: 8100,
+    parkingFee: 3050,
+    serviceFee: 7050,
+    month: 5150,
+    member: 3500,
+    percent: -2.8,
+    mpercent: -3.2
+  },
+  {
+    name: "郑州二七广场充电站",
+    id: "VXZ10027",
+    city: "郑州",
+    count: 120,
+    electricity: 8000,
+    parkingFee: 3000,
+    serviceFee: 7000,
+    month: 5100,
+    member: 3450,
+    percent: 2.4,
+    mpercent: 0.8
+  },
+  {
+    name: "大连星海广场充电站",
+    id: "VXZ10028",
+    city: "大连",
+    count: 117,
+    electricity: 7950,
+    parkingFee: 3000,
+    serviceFee: 7100,
+    month: 5150,
+    member: 3500,
+    percent: 2.6,
+    mpercent: 3.9
+  },
+  {
+    name: "宁波天一广场充电站",
+    id: "VXZ10029",
+    city: "宁波",
+    count: 130,
+    electricity: 8250,
+    parkingFee: 3150,
+    serviceFee: 7150,
+    month: 5250,
+    member: 3550,
+    percent: -3.4,
+    mpercent: -2.3
+  },
+  {
+    name: "贵阳甲秀楼充电站",
+    id: "VXZ10030",
+    city: "贵阳",
+    count: 114,
+    electricity: 7850,
+    parkingFee: 2950,
+    serviceFee: 6950,
+    month: 5050,
+    member: 3400,
+    percent: 2.2,
+    mpercent: -1.4
+  },
+  {
+    name: "珠海长隆海洋王国充电站",
+    id: "VXZ10031",
+    city: "珠海",
+    count: 114,
+    electricity: 7850,
+    parkingFee: 2950,
+    serviceFee: 6950,
+    month: 5050,
+    member: 3400,
+    percent: 2.2,
+    mpercent: 1.8
+  },
+  {
+    name: "天津滨海新区充电站",
+    id: "VXZ10032",
+    city: "天津",
+    count: 129,
+    electricity: 8350,
+    parkingFee: 3200,
+    serviceFee: 7200,
+    month: 5300,
+    member: 3600,
+    percent: -3.6,
+    mpercent: -2.6
+  }
+];
+// 原始的数据备份
+const originalChargingStation2 = JSON.parse(JSON.stringify(chargingStation2));
+// 定义 API 接口
+Mock.mock("https//www.demo.com/revenueList", 'post', (options: any) => {
+  chargingStation2 = originalChargingStation2
+  const { name = "", page = 1, pageSize = 10 } = options.body ? JSON.parse(options.body) : {}
+  // 根据条件过滤数据
+  console.log("营收统计表格接口",name,page,pageSize)
+  if (name) {
+    chargingStation2 = chargingStation2.filter(item => item.name.includes(name));
+  }
+  // 实现分页
+  const total = chargingStation2.length;
+  const start = (page - 1) * pageSize;
+  const paginatedItems = chargingStation2.slice(start, start + pageSize);
+  return {
+    code: 200,
+    success: true,
+    data:{
+      list:paginatedItems,
+      total,
+    }  
+  };
+});
