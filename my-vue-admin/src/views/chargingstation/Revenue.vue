@@ -108,7 +108,14 @@
                 <el-table-column label="充电站ID" prop="id"></el-table-column>
                 <el-table-column label="所属城市" prop="city"></el-table-column>
                 <el-table-column label="充电桩总量(个)" prop="count"></el-table-column>
-                <el-table-column label="单日总收入(元)" prop="day"></el-table-column>
+                <el-table-column label="单日总收入(元)" prop="day" sortable>
+                    <template #default="scope">
+                        <span>{{ scope.row.day }}</span>
+                        <el-tag :type="scope.row.percent > 0 ? 'danger' : 'success'" class="ml">
+                            {{ scope.row.percent > 0 ? "+" + scope.row.percent + "%" : scope.row.percent + "%" }}
+                        </el-tag>
+                    </template>
+                </el-table-column>
                 <el-table-column label="月度总收入(万元)" prop="month">
                     <template #default="scope">
                         <span>{{ scope.row.month }}</span>
@@ -122,6 +129,18 @@
                 <el-table-column label="服务费营收(元)" prop="serviceFee"></el-table-column>
                 <el-table-column label="会员储值金(元)" prop="member"></el-table-column>
             </el-table>
+            <el-card class="mt">
+                <el-input v-model="name" style="max-width: 400px;" placeholder="请输入站点名称">
+                    <template #append>
+                        <el-button icon="Search" @click="loadData"></el-button>
+                    </template>
+                </el-input>
+                <el-pagination class="fr mt mb" v-model:current-page="pageInfo.page"
+                    v-model:page-size="pageInfo.pageSize" :page-sizes="[10, 20, 30, 40]" :background="true"
+                    layout="total, sizes, prev, pager, next, jumper" :total="totals" @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange">
+                </el-pagination>
+            </el-card>
         </el-card>
     </div>
 </template>
@@ -129,9 +148,11 @@
 import formatNumberToThousands from '@/utils/toThousands'
 import { chartApi, revenueApi } from '@/api/chargingstation';
 import { useChart } from '@/hooks/useChart';
+import { usePagination } from '@/hooks/usePagination';
 import { ref, reactive, onMounted } from 'vue';
 import { TableData } from '@/types/revenue';
 const chartRef = ref(null)
+const name = ref<string>("")
 const setChartDate = async () => {
     const chartOptions = reactive({
         tooltip: {
@@ -191,7 +212,8 @@ const loading = ref<boolean>(false)
 useChart(chartRef, setChartDate)
 const loadData = async () => {
     loading.value = true
-    const { data: { list, total } } = await revenueApi({ page: 1, pageSize: 10, name: '' })
+    const { data: { list, total } } = await revenueApi({ ...pageInfo, name: name.value })
+    setTotals(total)
     tableData.value = list
     loading.value = false
     tableData.value = list.map((item: any) => ({
@@ -199,6 +221,7 @@ const loadData = async () => {
         day: item.electricity + item.parkingFee + item.serviceFee + item.member
     }))
 }
+const { totals, pageInfo, handleCurrentChange, handleSizeChange, setTotals } = usePagination(loadData)
 onMounted(() => {
     loadData()
 })

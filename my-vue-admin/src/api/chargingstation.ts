@@ -13,7 +13,8 @@ enum Api{
     Edit = '/station/edit',
     Delete = '/station/delete',
     RevenueChart = '/revenueChart',
-    Revenue='/revenueList'
+    Revenue = '/revenueList',
+    CurrentList='/currentList'
 }
 interface RevenueType{
     page: number,
@@ -35,4 +36,7 @@ function chartApi(){
 function revenueApi(data:RevenueType) {
     return post(Api.Revenue,data)
 }
-export { listApi,editApi,deleteApi,chartApi,revenueApi }
+function currentListApi() {
+    return post(Api.CurrentList)
+}
+export { listApi,editApi,deleteApi,chartApi,revenueApi,currentListApi }
