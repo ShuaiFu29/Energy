@@ -2148,3 +2148,26 @@ Mock.mock("https//www.demo.com/mapList", "post", () => {
     data: stations
   }
 })
+//订单管理接口
+Mock.mock('https//www.demo.com/orderList', 'post', (options: any) => {
+  const { pageSize } = JSON.parse(options.body);
+  console.log("后端订单管理接到参数", JSON.parse(options.body))
+  return {
+    code: 200,
+    message: "成功",
+    data: Mock.mock({
+      [`list|${pageSize}`]: [{
+        'orderNo': '@string("number", 6)', //订单号
+        'date': '@date("yyyy-MM-dd")',//订单日期
+        'startTime': "08:00:23",//开始时间
+        'endTime': "09:10:11",//结束时间
+        "equipmentNo|1": ['B109', 'C227', 'C106', "D158"],//设备编号
+        'money|1': [66.5,88.9,22.7,36.5,42.0],//金额
+        'pay|1': ["微信", "支付宝", "储值卡",],//支付方式
+        'status|1': [2, 3, 4],//订单状态
+      }],
+      "total": 54
+    })
+    // 生成55条数据
+  }
+});
