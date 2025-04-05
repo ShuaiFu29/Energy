@@ -1,8 +1,12 @@
-import { post } from "@/utils/http";
+import { post,get } from "@/utils/http";
 enum Api{
-    BatchDelete="/batchDelete"
+    BatchDelete = "/batchDelete",
+    CityList='/cityList'
 }
 function batchDeleteApi(order:string[]) {
     return post(Api.BatchDelete,{order})
 }
-export {batchDeleteApi}
+function cityListApi() {
+    return get(Api.CityList)
+}
+export {batchDeleteApi,cityListApi}

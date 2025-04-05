@@ -30,7 +30,8 @@
     </el-card>
     <el-card class="mt">
         <el-button type="danger" :disabled="!selectionList.length" @click="handleBatchDelete">批量删除</el-button>
-        <el-button icon="Download" type="primary" :disabled="!selectionList.length">导出订单数据到Excel</el-button>
+        <el-button icon="Download" type="primary" :disabled="!selectionList.length"
+            @click="exportToExcel">导出订单数据到Excel</el-button>
     </el-card>
     <el-card class="mt">
         <el-table :data="dataList" v-loading="loading" @selection-change="handleSelectionChange">
@@ -70,6 +71,8 @@ import { batchDeleteApi } from '@/api/operation'
 import { ElMessage } from 'element-plus'
 import { useTabsStore } from '@/store/tabs';
 import { useRouter, useRoute } from "vue-router";
+import * as XLSX from 'xlsx'
+import { saveAs } from "file-saver"
 interface SearchType {
     orderNo: string,
     status: number,
@@ -156,4 +159,12 @@ watch(() => route.name, (to, from) => {
         loadData()
     }
 })
+const exportToExcel = () => {
+    const ws = XLSX.utils.json_to_sheet(selectionList.value);//把数据转成工作表格式
+    const wb = XLSX.utils.book_new();//创建新的工作簿
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");//工作簿加到工作表中
+    const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" })
+    const blob = new Blob([wbout], { type: "application/octet-stream" });
+    saveAs(blob, "导入的数据.xlsx")
+}
 </script>
