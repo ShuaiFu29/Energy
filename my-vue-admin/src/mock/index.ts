@@ -2171,3 +2171,13 @@ Mock.mock('https//www.demo.com/orderList', 'post', (options: any) => {
     // 生成55条数据
   }
 });
+//订单管理-批量删除接口
+Mock.mock('https//www.demo.com/batchDelete', "post", (options: any) => {
+  const { order } = JSON.parse(options.body)
+  console.log("订单管理批量删除接口",JSON.stringify(order) )
+  return {
+    code: 200,
+    message: "成功",
+    data: "操作成功"
+  }
+})
