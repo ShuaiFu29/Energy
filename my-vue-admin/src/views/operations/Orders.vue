@@ -23,7 +23,7 @@
                 <el-input placeholder="请输入站点名称" v-model="searchParams.name"></el-input>
             </el-col>
             <el-col :span="6" class="mt">
-                <el-date-picker v-model="data" type="daterange" range-separator="/" start-placeholder="开始时间"
+                <el-date-picker v-model="date" type="daterange" range-separator="/" start-placeholder="开始时间"
                     end-placeholder="结束时间" @change="handleChange" value-format="YYYY-MM-DD" />
             </el-col>
         </el-row>
@@ -52,7 +52,7 @@
             </el-table-column>
             <el-table-column label="操作">
                 <template #default="scope">
-                    <el-button type="primary" size="small">详情</el-button>
+                    <el-button type="primary" size="small" @click="handleDetail(scope.row.orderNo)">详情</el-button>
                     <el-button type="danger" size="small">删除</el-button>
                 </template>
             </el-table-column>
@@ -64,10 +64,12 @@
     </el-card>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useHttp } from '@/hooks/useHttp'
 import { batchDeleteApi } from '@/api/operation'
 import { ElMessage } from 'element-plus'
+import { useTabsStore } from '@/store/tabs';
+import { useRouter, useRoute } from "vue-router";
 interface SearchType {
     orderNo: string,
     status: number,
@@ -139,6 +141,19 @@ const handleBatchDelete = async () => {
     } catch (error) {
         console.log(error)
     }
-
 }
+const router = useRouter()
+const tabsStore = useTabsStore();
+const { addTab, setCurrentTab } = tabsStore;
+const handleDetail = (orderNo: string) => {
+    addTab("订单详情", "/operations/detail", "Share")
+    setCurrentTab("订单详情", "/operations/detail",)
+    router.push("/operations/detail?orderNo=" + orderNo)
+}
+const route = useRoute()
+watch(() => route.name, (to, from) => {
+    if (to == "orders" && from != "detail") {
+        loadData()
+    }
+})
 </script>

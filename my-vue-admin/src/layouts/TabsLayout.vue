@@ -19,6 +19,8 @@
         </KeepAlive>
         <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive"></component>
     </RouterView>
+
+    <!-- <RouterView/> -->
 </template>
 <script setup lang="ts">
 import { useTabsStore } from "@/store/tabs.ts"
