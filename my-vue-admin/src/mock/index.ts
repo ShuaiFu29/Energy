@@ -2419,3 +2419,41 @@ Mock.mock('https//www.demo.com/alarmList', "get", () => {
     data: alarmList
   }
 })
+//会员卡管理接口
+Mock.mock('https//www.demo.com/member', 'post', (req:any) => {
+  const { page, pageSize,no,tel,name } = JSON.parse(req.body);
+  console.log("会员管理接口",page, pageSize,no,tel,name)
+  return {
+    "code": 200,
+    "message": "操作成功",
+    data: Mock.mock({
+      [`list|${pageSize}`]:[{
+        'memberCardNumber': '@id',  // 会员卡号
+        'cardType|1': ["普通卡", "VIP卡", "季卡"],  // 卡类型
+        'issueDate': '@date("yyyy-MM-dd")',  // 开卡日期
+        'holderName': '@cname',  // 持有人姓名
+        'holderPhone': /^1[3-9]\d{9}$/,  // 持有人电话
+        'cardBalance': '@float(100, 10000, 2, 2)',  // 卡余额
+        'transactionRecords|1-5': [{  // 消费记录
+            'transactionDate|1': ["2024-02-18","2024-04-08","2024-10-03","2024-10-15"],  // 消费日期
+            'transactionAmount': '@float(10, 500, 2, 2)',  // 消费金额
+            'transactionType|1': ["充电扣款", "服务费扣款", "停车费扣款", "其他"]  // 消费类型
+        }],
+        'validUntil': '@date("yyyy-MM-dd")'  // 有效期至
+    }],
+    total:53
+    })
+  }
+});
+//招商管理分类列表接口
+Mock.mock('https//www.demo.com/document',"get",()=>{
+  return {
+    code:200,
+    message:"操作成功",
+    data:{
+      type:["招商类","广告类","公告类","提示类","日常类","告警类","其他"],//文章类型
+      important:["一级","二级","三级","四级"],//重要程度
+      publish:["站内信","公众号","小程序","H5","官网"]//发布渠道
+    }
+  }
+})
