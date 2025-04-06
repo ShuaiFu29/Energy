@@ -2345,3 +2345,77 @@ Mock.mock('https//www.demo.com/cityList', "get", () => {
     data: cityList
   }
 })
+//报警管理-报警列表接口
+const alarmList = [
+  {
+    description: "充电桩拿不下来",
+    address: "北京市东城区",
+    equNo: "CD1001",
+    level: 1,//1严重 2紧急 3一般
+    time: "2024-09-15 09:33:24",
+    code: 10023,//故障代码
+    status: 1,//1待指派 2处理中 处理异常
+  },
+  {
+    description: "电动车无法充电",
+    address: "上海市浦东新区",
+    equNo: "CD1002",
+    level: 2,
+    time: "2024-09-16 10:15:00",
+    code: 10024,
+    status: 2,
+  },
+  {
+    description: "充电结束未通知",
+    address: "广州市天河区",
+    equNo: "CD1003",
+    level: 3,
+    time: "2024-09-17 11:28:45",
+    code: 10025,
+    status: 1,
+  },
+  {
+    description: "设备显示屏故障",
+    address: "深圳市南山区",
+    equNo: "CD1004",
+    level: 1,
+    time: "2024-09-18 14:05:12",
+    code: 10026,
+    status: 1,
+  },
+  {
+    description: "无法启动充电",
+    address: "重庆市渝中区",
+    equNo: "CD1005",
+    level: 2,
+    time: "2024-09-19 08:43:09",
+    code: 10027,
+    status: 2,
+  },
+  {
+    description: "充电枪接触不良",
+    address: "杭州市西湖区",
+    equNo: "CD1006",
+    level: 3,
+    time: "2024-09-20 13:17:38",
+    code: 10028,
+    status: 3,
+  },
+  {
+    description: "设备漏电报警",
+    address: "成都市武侯区",
+    equNo: "CD1007",
+    level: 1,
+    time: "2024-09-21 07:26:55",
+    code: 10029,
+    status: 2,
+  },
+]
+
+Mock.mock('https//www.demo.com/alarmList', "get", () => {
+  return {
+    code: 200,
+    message: "操作成功",
+    data: alarmList
+  }
+})
