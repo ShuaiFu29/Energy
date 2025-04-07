@@ -4,11 +4,13 @@
             <el-card>
                 <div class="title">
                     <h3>今日设备运行状态</h3>
-                    <p>更新时间：2025年3月30日</p>
-                    <el-icon color="#86909c" style="margin-left: 5px;">
+                    <!-- 动态显示时间 -->
+                    <p id="updateTime" class="ml">更新时间: {{ formattedTime }}</p>
+                    <!-- 点击刷新图标更新时间 -->
+                    <el-icon color="#86909c" style="margin-left: 5px; cursor: pointer;" @click="updateCurrentTime">
                         <Refresh />
                     </el-icon>
-                </div>
+                </div>  
                 <div class="equipment">
                     <div class="item">
                         <h4>充电桩使用率</h4>
@@ -292,12 +294,35 @@ import remain from "@/assets/remain.png"
 import total from "@/assets/total.png"
 import money from "@/assets/money.png"
 import daily from "@/assets/daily.png"
-import { ref, reactive } from "vue"
+import { ref, reactive,computed } from "vue"
 import { useChart } from '@/hooks/useChart'
+import { ElMessage } from 'element-plus';
 import { chartDataApi, chartDataApi2, chartDataApi3 } from "@/api/dashboard"
 const chartRef = ref(null)
 const chartRef2 = ref(null)
 const chartRef3 = ref(null)
+// 定义当前时间的响应式变量
+const currentTime = ref(new Date());
+
+// 格式化时间为 yyyy年MM月dd日
+const formattedTime = computed(() => {
+  const year = currentTime.value.getFullYear();
+  const month = String(currentTime.value.getMonth() + 1).padStart(2, '0');
+  const day = String(currentTime.value.getDate()).padStart(2, '0');
+  return `${year}年${month}月${day}日`;
+});
+
+// 更新当前时间的方法
+function updateCurrentTime() {
+  currentTime.value = new Date(); // 更新为当前时间
+
+  // 显示提示消息
+  ElMessage({
+    message: '时间已更新成功！',
+    type: 'success', // 提示类型：success（绿色）
+    duration: 1000, // 持续时间：2秒
+  });
+}
 const setChartData = async () => {
     const chartOptions: any = reactive({
         title: {

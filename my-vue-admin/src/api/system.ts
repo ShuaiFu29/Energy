@@ -1,9 +1,15 @@
-import { post } from "../utils/http"
-enum Api {
-    auth = '/userAuth', 
-}
-function getAuthApi(pageAuthority:string):Promise<any> {
-    return post(Api.auth, {pageAuthority})
+import {post} from "@/utils/http"
+enum Api{
+    auth="/userAuth",
+    setAuth="/setAuth"
 }
 
-export {getAuthApi}
+function getAuthApi(pageAuthority:string){
+    return post(Api.auth,{pageAuthority})
+}
+
+function setAuthApi(account:string,btnList:string[],pageList:string[]){
+    return post(Api.setAuth,{account,btnList,pageList})
+}
+
+export {getAuthApi,setAuthApi}

@@ -26,7 +26,7 @@
                     <el-form-item label="站点名称：">
                         <el-input placeholder="请输入站点名称" v-model="form.name" />
                     </el-form-item>
-                    <el-form-item label="站点地址">
+                    <el-form-item label="站点地址：">
                         <el-input placeholder="请输入站点地址" v-model="form.region" />
                     </el-form-item>
                     <el-form-item label="经度：">
@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import MapContainer from "@/components/Map/MapContainer.vue";
+import MapContainer from "@/components/map/MapContainer.vue";
 import { reactive } from "vue";
 const form = reactive({
     name: '',
