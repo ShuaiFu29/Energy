@@ -2,7 +2,7 @@ import axios,{AxiosError, AxiosInstance, InternalAxiosRequestConfig,AxiosRespons
 
 import { ElNotification } from "element-plus";
 const service:AxiosInstance = axios.create({
-    baseURL: "https//www.demo.com",  //后面会把它替换成环境变量
+    baseURL:import.meta.env.VITE_API_URL, //后面我们会把它替换成环境变量
     timeout:5000
 })
 //请求拦截器
