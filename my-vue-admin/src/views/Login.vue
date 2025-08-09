@@ -5,7 +5,7 @@
                 <img :src="logo" alt="" width="70px" height="70px">
                 <h1 class="ml">动力港能源管理平台</h1>
             </div>
-            <el-form :model="ruleForm" :rules="rules" ref="formRef">
+            <el-form :model="ruleForm" :rules="rules" ref="formRef" @keyup.enter="handleLogin">
                 <el-form-item prop="username">
                     <el-input v-model="ruleForm.username" placeholder="请输入用户名" prefix-icon="User"/>
                 </el-form-item>
@@ -16,6 +16,21 @@
                     <el-button type="primary" style="width: 100%;" @click="handleLogin">登录</el-button>
                 </el-form-item>
             </el-form>
+            
+            <!-- 测试账号信息 -->
+            <div class="test-accounts">
+                <el-divider content-position="center">
+                    <span style="color: #909399; font-size: 12px;">测试账号</span>
+                </el-divider>
+                <div class="account-info">
+                    <el-tag type="success" size="small" class="account-tag">
+                        管理员：admin / admin666
+                    </el-tag>
+                    <el-tag type="info" size="small" class="account-tag">
+                        用户：user / user666
+                    </el-tag>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -67,13 +82,13 @@ const handleLogin = () => {
     height: 100vh;
     .login{
         width: 500px;
-        height: 300px;
+        height: 400px;
         padding: 50px;
         box-shadow: 0 0 10px #f4f4f4;
         text-align: center;
         position: absolute;
         top: 50%;
-        margin-top: -200px;
+        margin-top: -250px;
         left: 10%;
         .logo{
             display: flex;
@@ -82,6 +97,22 @@ const handleLogin = () => {
             margin-bottom: 40px;
             h1{
                 color: rgb(14, 53, 148);
+            }
+        }
+        .test-accounts{
+            margin-top: 20px;
+            .account-info{
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                align-items: center;
+                .account-tag{
+                    cursor: pointer;
+                    transition: all 0.3s;
+                    &:hover{
+                        transform: scale(1.05);
+                    }
+                }
             }
         }
     }
